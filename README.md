@@ -6,7 +6,7 @@
 - _GitHub actions for prokect set-up and build is working using JAR and Docker on GitHyb actions - **Harris**
 - _Correct branches for GitFlow workflow created - includes master, develop, and release branches - **Harris**
 - _First release created on GitHub - **Eloise**
-- _Code of conduct defined - **Dhruv**
+- _Code of conduct defined - **Eloise**
 
 **Roles / Contributions (Code Review 1)**
 - **Matthew** -> _Set up GitHub repo, added initial files, created backlog in README_
