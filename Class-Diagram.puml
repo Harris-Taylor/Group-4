@@ -1,0 +1,38 @@
+@startuml
+' =============================
+' UML Class Diagram for App, Employee, and Department
+' =============================
+
+' Title (optional)
+title Class Diagram - Get Salaries by Department Feature
+
+' Define classes
+class App {
+    - Connection conn
+    + App(Connection conn)
+    + Department getDepartment(String dept_name)
+    + ArrayList<Employee> getSalariesByDepartment(Department dept)
+    + static void main(String[] args)
+}
+
+class Employee {
+    + int emp_no
+    + String first_name
+    + String last_name
+    + int salary
+    + Employee(int emp_no, String first_name, String last_name, int salary)
+}
+
+class Department {
+    + String dept_no
+    + String dept_name
+    + Employee manager
+    + Department(String dept_no, String dept_name)
+}
+
+' Relationships
+App --> Department : uses
+App --> Employee : uses
+Department *-- Employee : manager
+
+@enduml
