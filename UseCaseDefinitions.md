@@ -26,3 +26,16 @@
 5. Results displayed in a summary table.
 
 ---
+
+## 3. Generate Country Report
+**Actor:** Data Analyst / End User  
+**Description:** Generates a detailed report containing all relevant information for each country.  
+**Preconditions:** SQL database contains up-to-date country data.  
+**Postconditions:** A complete report for each country is produced and displayed.  
+**Main Flow:**
+1. Analyst selects “Country Report”.
+2. System queries SQL database for all country information.
+3. Database returns detailed results.
+4. System displays or exports the report.
+
+---
