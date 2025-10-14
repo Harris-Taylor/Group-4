@@ -39,3 +39,16 @@
 4. System displays or exports the report.
 
 ---
+
+## 4. Generate City Report
+**Actor:** Data Analyst / End User  
+**Description:** Generates a detailed report containing all relevant information for each city.  
+**Preconditions:** SQL database contains up-to-date city data.  
+**Postconditions:** A complete report for each city is produced and displayed.  
+**Main Flow:**
+1. Analyst selects “City Report”.
+2. System queries SQL database for all city information.
+3. Database returns detailed results.
+4. System displays or exports the report.
+
+---
