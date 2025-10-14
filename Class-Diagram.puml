@@ -2,7 +2,7 @@
 title Use Case Diagram - Global Population Analysis System
 
 actor "Data Analyst" as Analyst
-actor "SQL Database" as DB
+actor "SQL Database" as DataBase
 
 rectangle "Population Analysis System" as System {
     usecase "Retrieve Country Data" as UC1
