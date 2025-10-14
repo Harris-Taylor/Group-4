@@ -62,3 +62,4 @@
 1. System sends query requests to SQL database.
 2. Database responds with results.
 3. If updates are made, they are sent in both directions.
+
