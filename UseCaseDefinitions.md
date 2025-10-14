@@ -12,3 +12,17 @@
 4. System displays the report to the analyst.
 
 ---
+
+## 2. Retrieve Global Chinese-Speaking Population
+**Actor:** Data Analyst  
+**Description:** Calculates the total number of people who speak Chinese worldwide and determines the percentage of the global population.  
+**Preconditions:** Language and population data exist in the SQL database.  
+**Postconditions:** A numerical total and percentage value are displayed.  
+**Main Flow:**
+1. Analyst requests the “Chinese Speakers” report.
+2. System queries SQL database for language and population data.
+3. Database returns results.
+4. System aggregates totals and calculates percentages.
+5. Results displayed in a summary table.
+
+---
