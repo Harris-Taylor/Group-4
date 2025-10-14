@@ -53,4 +53,12 @@
 
 ---
 
-
+## 5. Database Synchronisation
+**Actor:** System
+**Description:** Ensures bi-directional data exchange between the application and SQL database, keeping reports up-to-date.
+**Preconditions:** Database connection and permissions are configured.
+**Postconditions:** Any updates in the database or system are reflected in both directions.
+**Main Flow:**
+1. System sends query requests to SQL database.
+2. Database responds with results.
+3. If updates are made, they are synchronised in both directions.
