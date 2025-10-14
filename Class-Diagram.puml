@@ -1,38 +1,39 @@
 @startuml
-' =============================
-' UML Class Diagram for App, Employee, and Department
-' =============================
+title Use Case Diagram - Global Population Analysis System
 
-' Title (optional)
-title Class Diagram - Get Salaries by Department Feature
+actor "Data Analyst" as Analyst
+actor "SQL Database" as DB
 
-' Define classes
-class App {
-    - Connection conn
-    + App(Connection conn)
-    + Department getDepartment(String dept_name)
-    + ArrayList<Employee> getSalariesByDepartment(Department dept)
-    + static void main(String[] args)
+rectangle "Population Analysis System" as System {
+    usecase "Retrieve Country Data" as UC1
+    usecase "Sort Data by Population" as UC2
+    usecase "Display Global Population Report" as UC3
+    usecase "Retrieve Language Statistics" as UC4
+    usecase "Generate Country Report" as UC5
+    usecase "Generate City Report" as UC6
+    usecase "Analyse Data" as UC7
 }
 
-class Employee {
-    + int emp_no
-    + String first_name
-    + String last_name
-    + int salary
-    + Employee(int emp_no, String first_name, String last_name, int salary)
-}
+'--- Data Analyst interactions ---
+Analyst --> UC1 : "Request Data"
+Analyst --> UC3 : "View Global Report"
+Analyst --> UC4 : "Request Chinese Speakers Report"
+Analyst --> UC5 : "Request Country Report"
+Analyst --> UC6 : "Request City Report"
+Analyst --> UC7 : "Analyse Data"
 
-class Department {
-    + String dept_no
-    + String dept_name
-    + Employee manager
-    + Department(String dept_no, String dept_name)
-}
+'--- System internal flow ---
+UC1 --> UC2 : "Send Data for Sorting"
+UC2 --> UC3 : "Sorted by Population"
+UC3 --> UC7
+UC4 --> UC7
+UC5 --> UC7
+UC6 --> UC7
 
-' Relationships
-App --> Department : uses
-App --> Employee : uses
-Department *-- Employee : manager
+'--- Bi-directional SQL data exchange ---
+UC1 <--> DB : "Query / Return Country Records"
+UC4 <--> DB : "Query / Return Language Data"
+UC5 <--> DB : "Query / Return Country Details"
+UC6 <--> DB : "Query / Return City Details"
 
 @enduml
