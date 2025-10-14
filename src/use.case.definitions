@@ -3,7 +3,7 @@
 ## 1. View All Countries by Population
 **Actor:** Data Analyst  
 **Description:** Retrieves a list of all countries from the SQL database, which will be ordered in descending population.
-**Preconditions:** The SQL database is connected and contains up-to-date country population data.  
+**Requirements:** The SQL database is connected and contains up-to-date country population data.
 **Postconditions:** A report or data table is displayed with all countries listed from largest to smallest population.  
 **Main Flow:**
 1. Analyst requests the “Countries by Population” report.
@@ -16,7 +16,7 @@
 ## 2. Retrieve Global Chinese-Speaking Population
 **Actor:** Data Analyst
 **Description:** Calculates the total number of people who speak Chinese worldwide and determines the percentage of the global population.
-**Preconditions:** Language and population data exist in the SQL database.
+**Requirements:** Language and population data exist in the SQL database.
 **Postconditions:** A numerical total and percentage value are displayed.
 **Main Flow:**
 1. Analyst requests the “Chinese Speakers” report.
@@ -30,7 +30,7 @@
 ## 3. Generate Country Report
 **Actor:** Data Analyst / End User
 **Description:** Generates a detailed report containing all relevant information for each country.
-**Preconditions:** SQL database contains up-to-date country data.
+**Requirements:** SQL database contains up-to-date country data.
 **Postconditions:** A complete report for each country is produced and displayed.
 **Main Flow:**
 1. Analyst selects “Country Report”.
@@ -43,7 +43,7 @@
 ## 4. Generate City Report
 **Actor:** Data Analyst / End User
 **Description:** Generates a detailed report containing all relevant information for each city.
-**Preconditions:** SQL database contains up-to-date city data.
+**Requirements:** SQL database contains up-to-date city data.
 **Postconditions:** A complete report for each city is produced and displayed.
 **Main Flow:**
 1. Analyst selects “City Report”.
@@ -56,9 +56,9 @@
 ## 5. Database Synchronisation
 **Actor:** System
 **Description:** Ensures bi-directional data exchange between the application and SQL database, keeping reports up-to-date.
-**Preconditions:** Database connection and permissions are configured.
+**Requirements:** Database connection and permissions are configured.
 **Postconditions:** Any updates in the database or system are reflected in both directions.
 **Main Flow:**
 1. System sends query requests to SQL database.
 2. Database responds with results.
-3. If updates are made, they are synchronised in both directions.
+3. If updates are made, they are sent in both directions.
