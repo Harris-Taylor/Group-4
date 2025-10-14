@@ -1,0 +1,14 @@
+# Use Case Definitions
+
+## 1. View All Countries by Population
+**Actor:** Data Analyst  
+**Description:** Retrieves a list of all countries from the SQL database, ordered by descending population.  
+**Preconditions:** The SQL database is connected and contains up-to-date country population data.  
+**Postconditions:** A report or data table is displayed with all countries listed from largest to smallest population.  
+**Main Flow:**
+1. Analyst requests the “Countries by Population” report.
+2. System sends a query to the SQL database.
+3. SQL database returns all country data ordered by population (descending).
+4. System displays the report to the analyst.
+
+---
