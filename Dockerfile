@@ -1,11 +1,4 @@
-# Use OpenJDK base image
-FROM openjdk:17-jdk-slim
-
-# Set working directory
-WORKDIR /app
-
-# Copy the built JAR into the container
-COPY target/seMethods-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
-
-# Run the JAR
-ENTRYPOINT ["java", "-jar", "app.jar"]
+FROM openjdk:latest
+COPY ./target/seMethods-1.0-SNAPSHOT-jar-with-dependencies.jar /tmp
+WORKDIR /tmp
+ENTRYPOINT ["java", "-jar", "seMethods-1.0-SNAPSHOT-jar-with-dependencies.jar"]
