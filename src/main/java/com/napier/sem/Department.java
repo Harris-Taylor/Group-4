@@ -3,6 +3,7 @@ package com.napier.sem;
 /**
  * Represents a department in the company
  */
+
 public class Department {
     // Department number (used as primary key in DB)
     private String dept_no;
