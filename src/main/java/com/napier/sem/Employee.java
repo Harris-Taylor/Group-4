@@ -28,7 +28,7 @@ public class Employee
     /**
      * Employee's salary
      */
-    public int salary;
+    public double salary;
 
     /**
      * Employee's current department
