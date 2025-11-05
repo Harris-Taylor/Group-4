@@ -3,8 +3,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MyTest {
     @Test
-    void unitTest()
-    {
-        assertEquals(5, 5);
+    void stringIsCorrect() {
+        String message = "Hello";
+        assertEquals("Hello", message);
+    }
+    @Test
+    void additionWorks() {
+        assertEquals(10, 5 + 5);
     }
 }
