@@ -1,4 +1,4 @@
-FROM openjdk:latest
+FROM amazoncorretto:17
 COPY ./target/seMethods-1.1-jar-with-dependencies.jar /tmp
 WORKDIR /tmp
 ENTRYPOINT ["java", "-jar", "seMethods-1.1-jar-with-dependencies.jar"]
