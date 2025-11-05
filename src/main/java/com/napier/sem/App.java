@@ -151,6 +151,18 @@ public class App {
         return employees;
     }
 
+    public void printSalaries(ArrayList<Employee> employees) {
+        if (employees == null) {
+            System.out.println("No employees to display.");
+            return;
+        }
+        for (Employee emp : employees) {
+            if (emp != null) {
+                System.out.println(emp.emp_no + " " + emp.first_name + " " + emp.last_name + " Salary: " + emp.salary);
+            }
+        }
+    }
+
     /**
      * Main method to test features
      */
