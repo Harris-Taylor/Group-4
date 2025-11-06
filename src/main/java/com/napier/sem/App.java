@@ -31,11 +31,16 @@ public class App
                 // Wait 5 seconds before each attempt
                 Thread.sleep(5000);
 
-                // Docker container host is 'db', port 3306
+                String host = System.getenv("DB_HOST");
+                String port = System.getenv("DB_PORT");
+                String user = System.getenv("DB_USER");
+                String pass = System.getenv("DB_PASS");
+
                 con = DriverManager.getConnection(
-                        "jdbc:mysql://db:3306/employees?allowPublicKeyRetrieval=true&useSSL=false",
-                        "root",
-                        ""); // replace "" with your root password if you set one
+                        "jdbc:mysql://" + host + ":" + port + "/employees?allowPublicKeyRetrieval=true&useSSL=false",
+                        user,
+                        pass
+                );
 
                 System.out.println("Successfully connected");
                 break;

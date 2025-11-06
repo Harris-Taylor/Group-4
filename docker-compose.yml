@@ -1,12 +1,21 @@
 version: '3'
 services:
-  # Application Dockerfile is in same folder which is .
   app:
     build: .
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASS: example
 
-  # db is is db folder
   db:
     build: db/.
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
     ports:
       - "33060:3306"
+    volumes:
+      - ./db/test_db:/docker-entrypoint-initdb.d
