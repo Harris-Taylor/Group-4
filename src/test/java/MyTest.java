@@ -34,18 +34,18 @@ class MyTest
         assertArrayEquals(a, b);
     }
 
-    // Test 5 using condition to tell use if it's true
+    // Test 5 ias the number even ?
     @Test
-    void unitTest6()
-    {
-        assertTrue(5 == 5);
+    void testIsEven() {
+        int num = 8;
+        assertTrue(num % 2 == 0, "Number should be even");
     }
 
-    // Test 6 using condition that says its false
+    // Test 6 is testing if number is odd
     @Test
-    void unitTest7()
-    {
-        assertFalse(5 == 4);
+    void testIsOdd() {
+        int num = 7;
+        assertTrue(num % 2 != 0, "Number should be odd");
     }
 
     // Test 7
@@ -74,5 +74,12 @@ class MyTest
     void throwsException() throws NullPointerException
     {
         throw new NullPointerException();
+    }
+
+    // Test 11 is testing if the sentence has a specific word
+    @Test
+    void testStringContainsWord() {
+        String sentence = "JUnit tests are fun";
+        assertTrue(sentence.contains("fun"), "Sentence should contain 'fun'");
     }
 }
