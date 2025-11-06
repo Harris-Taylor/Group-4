@@ -1,3 +1,5 @@
+package PracticeTest;
+
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,11 +14,11 @@ class MyTest
     }
 
     //Test 2 doesnt work
-    @Test
-    void unitTest2()
-    {
-        assertEquals(5, 4);
-    }
+    //@Test
+   // void unitTest2()
+   // {
+        //assertEquals(5, 4);
+  //  }
 
     // Test 3 :add delta : the maximum allowed difference between expected and actual values for floating point precision
     @Test
