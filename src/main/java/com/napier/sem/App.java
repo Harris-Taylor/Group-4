@@ -10,55 +10,33 @@ public class App
     /**
      * Connect to MySQL database in Docker
      */
-    public void connect()
-    {
-        try
-        {
+    public void connect(String location, int delay) {
+        try {
+            // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
-        for (int i = 0; i < retries; ++i)
-        {
-            System.out.println("Connecting to database... Attempt " + (i+1));
-            try
-            {
-                // Wait 5 seconds before each attempt
-                Thread.sleep(5000);
-
-                String host = System.getenv("DB_HOST");
-                String port = System.getenv("DB_PORT");
-                String user = System.getenv("DB_USER");
-                String pass = System.getenv("DB_PASS");
-
-                con = DriverManager.getConnection(
-                        "jdbc:mysql://" + host + ":" + port + "/employees?allowPublicKeyRetrieval=true&useSSL=false",
-                        user,
-                        pass
-                );
-
+        for (int i = 0; i < retries; ++i) {
+            System.out.println("Connecting to database...");
+            try {
+                // Wait a bit for db to start
+                Thread.sleep(delay);
+                // Connect to database
+                con = DriverManager.getConnection("jdbc:mysql://" + location
+                                + "/employees?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root", "example");
                 System.out.println("Successfully connected");
                 break;
-            }
-            catch (SQLException sqle)
-            {
-                System.out.println("Failed to connect to database: " + sqle.getMessage());
-            }
-            catch (InterruptedException ie)
-            {
+            } catch (SQLException sqle) {
+                System.out.println("Failed to connect to database attempt " +                                  Integer.toString(i));
+                System.out.println(sqle.getMessage());
+            } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
-        }
-
-        if (con == null)
-        {
-            System.out.println("Could not connect to database after " + retries + " attempts, exiting.");
-            System.exit(-1);
         }
     }
 
@@ -222,30 +200,24 @@ public class App
     /**
      * Main method to test features
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
+        // Create new Application and connect to database
         App a = new App();
-        a.connect();
 
-        // Test single employee
-        Employee emp = getEmployee(255530); // static method, call directly
-        a.displayEmployee(emp);
-
-        // Test department salaries
-        Department dept = a.getDepartment("Sales");
-        if (dept != null)
-        {
-            ArrayList<Employee> empList = a.getSalariesByDepartment(dept);
-            for (Employee e : empList)
-            {
-                a.displayEmployee(e);
-            }
-        }
-        else
-        {
-            System.out.println("Department not found.");
+        if(args.length < 1){
+            a.connect("localhost:33060", 30000);
+        }else{
+            a.connect(args[0], Integer.parseInt(args[1]));
         }
 
+        Department dept = a.getDepartment("Development");
+        ArrayList<Employee> employees = a.getSalariesByDepartment(dept);
+
+
+        // Print salary report
+        a.printSalaries(employees);
+
+        // Disconnect from database
         a.disconnect();
     }
 }
