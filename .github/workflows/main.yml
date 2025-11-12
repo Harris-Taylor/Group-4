@@ -4,6 +4,7 @@ on:
     branches:
       - master
       - lab08
+      - develop
 
 jobs:
   UnitTests:
@@ -21,8 +22,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run Unit Tests
-        run: mvn -B -Dtest=com.napier.devops.AppTest test
+      - name: Run Unit Tests with JaCoCo
+        run: mvn -B clean test -DskipITs=true
 
   IntegrationTests:
     name: Integration Tests
@@ -55,6 +56,14 @@ jobs:
           docker stop employees || true
           docker rm employees || true
           docker image rm database || true
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          # token: ${{ secrets.CODECOV_TOKEN }} # not needed for public repos
+          directory: ./target/site/jacoco
+          flags: IntegrationTests
+          verbose: true
 
   Build:
     name: Build and Run with Docker Compose
