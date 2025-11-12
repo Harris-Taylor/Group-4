@@ -19,5 +19,8 @@
 - Everyone agreed to complete their assigned tasks by Tuesday night to be ready for submission.
 - Future plan: hold weekly check-ins after labs to assign tasks earlier and avoid last-minute stress.
 
+  **Markdown (code coverage)**
+  [![codecov](https://codecov.io/github/Harris-Taylor/Group-4/graph/badge.svg?token=42LD0W726E)](https://codecov.io/github/Harris-Taylor/Group-4)
+
 
 ![GitHub Workflow Status (branch)](https://img.shields.io/badge/Harris-Taylor-darkblue)
