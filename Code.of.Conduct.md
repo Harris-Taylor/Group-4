@@ -1,4 +1,4 @@
-# Code of Conduct
+# CODE OF CONDUCT
 
 ## Our Group Rules
 We all agreed that participation in our project is fundamental. We help each other and are there for one another. We accept all kinds of differences, including age, body size, disability, ethnicity, gender identity and expression, level of experience, education, nationality, or religion.
