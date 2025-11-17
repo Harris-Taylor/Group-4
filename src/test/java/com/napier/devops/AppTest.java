@@ -1,11 +1,11 @@
 package com.napier.devops;
 
 import com.napier.sem.App;
-import com.napier.sem.Employee;
+import com.napier.sem.Country;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest
 {
@@ -18,37 +18,38 @@ public class AppTest
     }
 
     @Test
-    void printSalariesTestNull()
+    void printCountriesTestNull()
     {
-        app.printSalaries(null);
+        app.printCountries(null);
     }
 
     @Test
-    void printSalariesTestEmpty()
+    void printCountriesTestEmpty()
     {
-        ArrayList<Employee> employess = new ArrayList<Employee>();
-        app.printSalaries(employess);
+        ArrayList<Country> countries = new ArrayList<>();
+        app.printCountries(countries);
     }
 
     @Test
-    void printSalariesTestContainsNull()
+    void printCountriesTestContainsNull()
     {
-        ArrayList<Employee> employess = new ArrayList<Employee>();
-        employess.add(null);
-        app.printSalaries(employess);
+        ArrayList<Country> countries = new ArrayList<>();
+        countries.add(null);
+        app.printCountries(countries);
     }
 
     @Test
-    void printSalaries()
+    void printCountries()
     {
-        ArrayList<Employee> employees = new ArrayList<Employee>();
-        Employee emp = new Employee();
-        emp.emp_no = 1;
-        emp.first_name = "Kevin";
-        emp.last_name = "Chalmers";
-        emp.title = "Engineer";
-        emp.salary = 55000;
-        employees.add(emp);
-        app.printSalaries(employees);
+        ArrayList<Country> countries = new ArrayList<>();
+        Country c = new Country();
+        c.code = "GBR";
+        c.name = "United Kingdom";
+        c.region = "Northern Europe";
+        c.continent = "Europe";
+        c.population = 67886011;
+        countries.add(c);
+
+        app.printCountries(countries);
     }
 }

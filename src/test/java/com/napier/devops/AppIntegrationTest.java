@@ -1,12 +1,9 @@
 package com.napier.devops;
 
 import com.napier.sem.App;
-import com.napier.sem.Employee;
+import com.napier.sem.Country;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,19 +16,19 @@ public class AppIntegrationTest
     {
         app = new App();
         app.connect("localhost:33060", 30000);
-
     }
 
     @Test
-    void testGetEmployee()
+    void testGetCountry()
     {
-        Employee emp = app.getEmployee(255530);
-        assertNotNull(emp, "Employee should not be null — check database connection or data");
+        // "GBR" (United Kingdom) always exists in world.sql
+        Country country = app.getCountry("GBR");
+        assertNotNull(country, "Country should not be null — check DB connection or data");
 
-        if (emp != null) {
-            assertEquals(255530, emp.emp_no);
-            assertEquals("Ronghao", emp.first_name);
-            assertEquals("Garigliano", emp.last_name);
+        if (country != null) {
+            assertEquals("GBR", country.code);
+            assertEquals("United Kingdom", country.name);
+            assertEquals("Europe", country.continent);
         }
     }
 }

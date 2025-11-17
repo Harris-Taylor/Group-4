@@ -8,40 +8,46 @@ public class App
     private static Connection con = null;
 
     /**
-     * Connect to MySQL database in Docker
+     * Connect to MySQL world database
      */
-    public void connect(String location, int delay) {
-        try {
-            // Load Database driver
+    public void connect(String location, int delay)
+    {
+        try
+        {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e)
+        {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
-        for (int i = 0; i < retries; ++i) {
+        for (int i = 0; i < retries; i++)
+        {
             System.out.println("Connecting to database...");
-            try {
-                // Wait a bit for db to start
+            try
+            {
                 Thread.sleep(delay);
-                // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://" + location
-                                + "/employees?allowPublicKeyRetrieval=true&useSSL=false",
-                        "root", "example");
+
+                con = DriverManager.getConnection(
+                        "jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root",
+                        "example"
+                );
+
                 System.out.println("Successfully connected");
                 break;
-            } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " +Integer.toString(i));
-                System.out.println(sqle.getMessage());
-            } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted? Should not happen.");
+            }
+            catch (Exception e)
+            {
+                System.out.println("Connection attempt failed: " + e.getMessage());
             }
         }
     }
 
     /**
-     * Disconnect from database
+     * Disconnect from DB
      */
     public void disconnect()
     {
@@ -53,171 +59,115 @@ public class App
     }
 
     /**
-     * Display an employee's info
+     * Get a country by its code (e.g., 'GBR')
      */
-    public void displayEmployee(Employee emp)
-    {
-        if (emp != null)
-        {
-            System.out.println(
-                    emp.emp_no + " " + emp.first_name + " " + emp.last_name + "\n" +
-                            emp.title + "\n" +
-                            "Salary: " + emp.salary + "\n" +
-                            emp.dept_name + "\n" +
-                            "Manager: " + emp.manager + "\n");
-        }
-    }
-
-    /**
-     * Prints a list of employees and their salaries
-     */
-    public void printSalaries(ArrayList<Employee> employees)
-    {
-        // Check employees is not null
-        if (employees == null)
-        {
-            System.out.println("No employees");
-            return;
-        }
-
-        // Print header
-        System.out.println(String.format("%-10s %-15s %-20s %-8s",
-                "Emp No", "First Name", "Last Name", "Salary"));
-
-        // Loop over all employees in the list
-        for (Employee emp : employees)
-        {
-            if (emp == null) continue; // skip null employees
-            String empString = String.format("%-10s %-15s %-20s %-8s",
-                    emp.emp_no, emp.first_name, emp.last_name, emp.salary);
-            System.out.println(empString);
-        }
-    }
-
-    /**
-     * Get a single employee by ID
-     */
-    public static Employee getEmployee(int ID)
+    public Country getCountry(String code)
     {
         try
         {
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT emp_no, first_name, last_name " +
-                    "FROM employees WHERE emp_no = " + ID;
+            String query =
+                    "SELECT Code, Name, Continent, Region, Population, Capital " +
+                            "FROM country WHERE Code = '" + code + "'";
 
-            ResultSet rset = stmt.executeQuery(strSelect);
-            if (rset.next())
-            {
-                Employee emp = new Employee();
-                emp.emp_no = rset.getInt("emp_no");
-                emp.first_name = rset.getString("first_name");
-                emp.last_name = rset.getString("last_name");
-                return emp;
-            }
-            else return null;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
-            return null;
-        }
-    }
-
-    /**
-     * Get a Department object from the DB by department name
-     */
-    public Department getDepartment(String dept_name)
-    {
-        Department dept = null;
-
-        try
-        {
-            Statement stmt = con.createStatement();
-            String strSelect = "SELECT dept_no, dept_name FROM departments WHERE dept_name = '" + dept_name + "'";
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = stmt.executeQuery(query);
 
             if (rset.next())
             {
-                dept = new Department();
-                dept.setDept_no(rset.getString("dept_no"));
-                dept.setName(rset.getString("dept_name"));
+                Country c = new Country();
+                c.code = rset.getString("Code");
+                c.name = rset.getString("Name");
+                c.continent = rset.getString("Continent");
+                c.region = rset.getString("Region");
+                c.population = rset.getInt("Population");
+                c.capital = rset.getInt("Capital");
+                return c;
             }
         }
         catch (SQLException e)
         {
-            System.out.println("Failed to get department: " + e.getMessage());
+            System.out.println("Error fetching country: " + e.getMessage());
         }
 
-        return dept;
+        return null;
     }
 
     /**
-     * Get all employees in a department with current salaries
+     * Get all countries ordered by population descending
      */
-    public ArrayList<Employee> getSalariesByDepartment(Department dept)
+    public ArrayList<Country> getCountries()
     {
-        ArrayList<Employee> employees = new ArrayList<>();
-
-        if (con == null || dept == null)
-        {
-            System.out.println("No database connection or department.");
-            return employees;
-        }
+        ArrayList<Country> countries = new ArrayList<>();
 
         try
         {
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary " +
-                    "FROM employees, salaries, dept_emp, departments " +
-                    "WHERE employees.emp_no = salaries.emp_no " +
-                    "AND employees.emp_no = dept_emp.emp_no " +
-                    "AND dept_emp.dept_no = departments.dept_no " +
-                    "AND salaries.to_date = '9999-01-01' " +
-                    "AND departments.dept_no = '" + dept.getDept_no() + "' " +
-                    "ORDER BY employees.emp_no ASC";
+            String query =
+                    "SELECT Code, Name, Continent, Region, Population, Capital " +
+                            "FROM country ORDER BY Population DESC";
 
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet rset = stmt.executeQuery(query);
 
             while (rset.next())
             {
-                Employee emp = new Employee();
-                emp.emp_no = rset.getInt("emp_no");
-                emp.first_name = rset.getString("first_name");
-                emp.last_name = rset.getString("last_name");
-                emp.salary = rset.getDouble("salary");
-                employees.add(emp);
+                Country c = new Country();
+                c.code = rset.getString("Code");
+                c.name = rset.getString("Name");
+                c.continent = rset.getString("Continent");
+                c.region = rset.getString("Region");
+                c.population = rset.getInt("Population");
+                c.capital = rset.getInt("Capital");
+                countries.add(c);
             }
         }
         catch (SQLException e)
         {
-            System.out.println("Failed to get employees by department: " + e.getMessage());
+            System.out.println("Failed to fetch countries: " + e.getMessage());
         }
 
-        return employees;
+        return countries;
     }
 
     /**
-     * Main method to test features
+     * Print country report
      */
-    public static void main(String[] args) {
-        // Create new Application and connect to database
-        App a = new App();
-
-        if(args.length < 1){
-            a.connect("localhost:33060", 30000);
-        }else{
-            a.connect(args[0], Integer.parseInt(args[1]));
+    public void printCountries(ArrayList<Country> countries)
+    {
+        if (countries == null || countries.isEmpty())
+        {
+            System.out.println("No countries to display.");
+            return;
         }
 
-        Department dept = a.getDepartment("Development");
-        ArrayList<Employee> employees = a.getSalariesByDepartment(dept);
+        System.out.printf("%-5s %-40s %-15s %-20s %-12s %-10s%n",
+                "Code", "Name", "Continent", "Region", "Population", "Capital");
 
+        for (Country c : countries)
+        {
+            if (c == null)
+            {
+                System.out.println("Null country record.");
+                continue;
+            }
 
-        // Print salary report
-        a.printSalaries(employees);
+            System.out.printf("%-5s %-40s %-15s %-20s %-12d %-10s%n",
+                    c.code, c.name, c.continent, c.region, c.population, c.capital);
+        }
+    }
 
-        // Disconnect from database
-        a.disconnect();
+    public static void main(String[] args)
+    {
+        App app = new App();
+
+        // Default to local docker
+        if (args.length < 1)
+            app.connect("localhost:33060", 30000);
+        else
+            app.connect(args[0], Integer.parseInt(args[1]));
+
+        ArrayList<Country> countries = app.getCountries();
+        app.printCountries(countries);
+
+        app.disconnect();
     }
 }
