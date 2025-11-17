@@ -7,22 +7,37 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Unit tests for the printCountries method in the App class.
+ */
 public class AppTest
 {
+    /**
+     * The App instance used for running output tests
+     */
     static App app;
 
+    /**
+     * Initialises the App object before running tests.
+     */
     @BeforeAll
     static void init()
     {
         app = new App();
     }
 
+    /**
+     * Tests printCountries with a null input lists.
+     */
     @Test
     void printCountriesTestNull()
     {
         app.printCountries(null);
     }
 
+    /**
+     * Tests printCountries with an empty list.
+     */
     @Test
     void printCountriesTestEmpty()
     {
@@ -30,6 +45,9 @@ public class AppTest
         app.printCountries(countries);
     }
 
+    /**
+     * Tests printCountries with a list containing a null element.
+     */
     @Test
     void printCountriesTestContainsNull()
     {
@@ -38,6 +56,9 @@ public class AppTest
         app.printCountries(countries);
     }
 
+    /**
+     * Tests printCountries with a valid Country object.
+     */
     @Test
     void printCountries()
     {
