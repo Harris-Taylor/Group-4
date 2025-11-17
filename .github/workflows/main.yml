@@ -98,7 +98,7 @@ jobs:
         run: mkdir -p ./reports
 
       - name: Copy Output
-        run: docker cp app-1:/tmp/reports ./reports
+        run: docker cp group-4-app-1:/tmp/reports ./reports
 
       - name: Deploy Reports
         uses: JamesIves/github-pages-deploy-action@v4.2.5
