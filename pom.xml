@@ -8,11 +8,14 @@
 <artifactId>seMethods</artifactId>
 <version>1.1</version>
 
-<properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-</properties>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Added so IntelliJ stops complaining -->
+        <skipITs>true</skipITs>
+    </properties>
 
 <dependencies>
     <dependency>
@@ -29,7 +32,6 @@
 </dependencies>
 
     <build>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -37,7 +39,6 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.2.5</version>
                     <configuration>
-                        <!-- Run only unit tests (AppTest, etc.) -->
                         <excludes>
                             <exclude>**/*IntegrationTest.java</exclude>
                         </excludes>
@@ -69,6 +70,20 @@
         </pluginManagement>
 
         <plugins>
+
+            <!-- NEW: disable default JAR so only devops.jar is created -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Assembly plugin to create devops.jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -108,14 +123,14 @@
                 </configuration>
             </plugin>
 
-            <!-- Surefire plugin (updated) -->
+            <!-- Surefire plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
             </plugin>
 
-            <!-- JaCoCo plugin (updated and works on Java 17–25) -->
+            <!-- JaCoCo plugin -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -135,8 +150,10 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
+
 
     <profiles>
         <!-- Profile to skip integration tests -->

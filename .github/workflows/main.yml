@@ -1,4 +1,8 @@
 name: DevOps Workflow
+
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -60,13 +64,13 @@ jobs:
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not needed for public repos
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./target/site/jacoco
           flags: IntegrationTests
           verbose: true
 
   Build:
-    name: Build and Run with Docker Compose
+    name: Build Run in Docker and Deploy Release
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -85,3 +89,12 @@ jobs:
 
       - name: Run docker compose
         run: docker compose up --abort-on-container-exit
+
+      - name: Deploy Release (Upload JAR to GitHub Releases)
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "latest"
+          files: |
+            ./target/*.jar
