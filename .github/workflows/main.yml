@@ -1,5 +1,8 @@
 name: DevOps Workflow
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
