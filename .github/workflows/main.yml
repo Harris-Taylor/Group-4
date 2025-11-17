@@ -108,6 +108,7 @@ jobs:
           branch: reports
           folder: reports
 
+
       # Existing release deployment
       - name: Deploy Release (Upload JAR to GitHub Releases)
         uses: marvinpinto/action-automatic-releases@latest
