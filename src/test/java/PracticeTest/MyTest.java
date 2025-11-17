@@ -19,12 +19,13 @@ class MyTest
 
     /**
     // Test 2: This test would fail because 5 != 4 (on purpose for testing)
-    */
+
     @Test
     void unitTest2()
     {
         assertEquals(5, 4);
     }
+    */
 
 
     /**
