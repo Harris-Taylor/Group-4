@@ -2,6 +2,7 @@ package com.napier.sem;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.io.*; // ⭐ ADDED for file writing
 
 /**
  * Main application class for connecting to the MySQL 'world' database,
@@ -182,6 +183,43 @@ public class App
         }
     }
 
+    // ⭐ ADDED — Markdown output
+    /**
+     * Outputs a list of countries to a Markdown file.
+     *
+     * @param countries list of Country objects
+     * @param filename name of the Markdown file to write
+     */
+    public void outputCountries(ArrayList<Country> countries, String filename) {
+        if (countries == null) {
+            System.out.println("No countries");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("| Code | Name | Continent | Region | Population | Capital |\r\n");
+        sb.append("| --- | --- | --- | --- | --- | --- |\r\n");
+
+        for (Country c : countries) {
+            if (c == null) continue;
+            sb.append("| " + c.code + " | " + c.name + " | " + c.continent + " | " +
+                    c.region + " | " + c.population + " | " + c.capital + " |\r\n");
+        }
+
+        try {
+            // Correct Docker-friendly directory
+            new File("/tmp/reports/").mkdir();
+            BufferedWriter writer = new BufferedWriter(
+                    new FileWriter("/tmp/reports/" + filename)
+            );
+
+            writer.write(sb.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * The main entry point of the application.
      * Connects to the database, retrieves all countries, prints them, and disconnects.
@@ -199,6 +237,9 @@ public class App
         // Fetch and print all countries
         ArrayList<Country> countries = app.getCountries();
         app.printCountries(countries);
+
+        // ⭐ ADDED: Write Markdown report
+        app.outputCountries(countries, "AllCountries.md");
 
         // Close the database connection
         app.disconnect();
