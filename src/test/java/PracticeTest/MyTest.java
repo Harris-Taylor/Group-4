@@ -3,31 +3,42 @@ package PracticeTest;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * A collection of example unit tests demonstrating various JUnit assertions.
+ */
 class MyTest
 {
-    // Test 1 does work
+    /**
+     * Test 1: An equality check.
+     */
     @Test
     void unitTest()
     {
         assertEquals(5, 5);
     }
 
-    //Test 2 doesnt work
-    //@Test
-   // void unitTest2()
-   // {
-        //assertEquals(5, 4);
-  //  }
+    /**
+    // Test 2: This test would fail because 5 != 4 (on purpose for testing)
+    */
+    @Test
+    void unitTest2()
+    {
+        assertEquals(5, 4);
+    }
 
-    // Test 3 :add delta : the maximum allowed difference between expected and actual values for floating point precision
+
+    /**
+     * Test 3: Uses a delta for floating point comparison.
+     */
     @Test
     void unitTest4()
     {
         assertEquals(5.0, 5.01, 0.02);
     }
 
-    // Test 4 : does a = b
+    /**
+     * Test 4: Compares two integer arrays for equality.
+     */
     @Test
     void unitTest5()
     {
@@ -36,51 +47,67 @@ class MyTest
         assertArrayEquals(a, b);
     }
 
-    // Test 5 ias the number even ?
+    /**
+     * Test 5: Checks if a number is even.
+     */
     @Test
-    void testIsEven() {
+    void testIsEven()
+    {
         int num = 8;
         assertTrue(num % 2 == 0, "Number should be even");
     }
 
-    // Test 6 is testing if number is odd
+    /**
+     * Test 6: Checks if a number is odd.
+     */
     @Test
-    void testIsOdd() {
+    void testIsOdd()
+    {
         int num = 7;
         assertTrue(num % 2 != 0, "Number should be odd");
     }
 
-    // Test 7
+    /**
+     * Test 7: Verifies that a value is null.
+     */
     @Test
     void unitTest8()
     {
         assertNull(null);
     }
 
-    // Test 8 not null( so needs writing )
+    /**
+     * Test 8: Verifies that a value is not null.
+     */
     @Test
     void unitTest9()
     {
         assertNotNull("Hello");
     }
 
-
-    // illustrates how to test if a method throws an exception. By default, any exception
-    // thrown fails a test if no assertThrows matches.
+    /**
+     * Test 9: Checks that a method throws a NullPointerException.
+     */
     @Test
     void unitTest10()
     {
         assertThrows(NullPointerException.class, this::throwsException);
     }
 
+    /**
+     * Helper method for unitTest10 that always throws a NullPointerException.
+     */
     void throwsException() throws NullPointerException
     {
         throw new NullPointerException();
     }
 
-    // Test 11 is testing if the sentence has a specific word
+    /**
+     * Test 10: Verifies that a sentence contains a specific word.
+     */
     @Test
-    void testStringContainsWord() {
+    void testStringContainsWord()
+    {
         String sentence = "JUnit tests are fun";
         assertTrue(sentence.contains("fun"), "Sentence should contain 'fun'");
     }
