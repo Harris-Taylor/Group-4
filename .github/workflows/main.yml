@@ -90,6 +90,9 @@ jobs:
       - name: Run docker compose
         run: docker compose up --abort-on-container-exit
 
+      - name: List running containers
+        run: docker ps -a
+
       - name: Create reports directory
         run: mkdir -p ./reports
 
