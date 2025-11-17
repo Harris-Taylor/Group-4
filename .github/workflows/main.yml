@@ -98,3 +98,22 @@ jobs:
           automatic_release_tag: "latest"
           files: |
             ./target/*.jar
+
+      - name: Copy Output
+        run: docker container cp group-4_app_1:/tmp/reports ./reports
+
+      - name: Deploy Reports
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: reports
+          folder: reports
+
+      # Existing release deployment
+      - name: Deploy Release (Upload JAR to GitHub Releases)
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "latest"
+          files: |
+            ./target/*.jar
