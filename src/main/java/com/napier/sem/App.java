@@ -183,7 +183,7 @@ public class App
     }
 
     /**
-     * Main entry point of the application.
+     * The main entry point of the application.
      * Connects to the database, retrieves all countries, prints them, and disconnects.
      */
     public static void main(String[] args)
