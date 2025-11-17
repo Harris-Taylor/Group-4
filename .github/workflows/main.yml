@@ -90,17 +90,11 @@ jobs:
       - name: Run docker compose
         run: docker compose up --abort-on-container-exit
 
-      - name: Deploy Release (Upload JAR to GitHub Releases)
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          automatic_release_tag: "latest"
-          files: |
-            ./target/*.jar
+      - name: Create reports directory
+        run: mkdir -p ./reports
 
       - name: Copy Output
-        run: docker cp group-4-app-1:/tmp/reports ./reports
+        run: docker cp app-1:/tmp/reports ./reports
 
       - name: Deploy Reports
         uses: JamesIves/github-pages-deploy-action@v4.2.5
@@ -108,8 +102,6 @@ jobs:
           branch: reports
           folder: reports
 
-
-      # Existing release deployment
       - name: Deploy Release (Upload JAR to GitHub Releases)
         uses: marvinpinto/action-automatic-releases@latest
         with:
